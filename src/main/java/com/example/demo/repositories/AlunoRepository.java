@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AlunoRepository extends PagingAndSortingRepository<Aluno, Long> {
-    public List<Aluno> findByNomeAndMatricula(String nome, Long matricula);
+    public List<Aluno> findByNome(String nome);
 }

@@ -6,10 +6,8 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "TESTE", schema = "TST")
 @Builder
 @Getter
 @Setter
@@ -21,12 +19,11 @@ public class Aluno {
     @NotNull
     private Long id;
 
-    @Column(name = "NOME_ALUNO")
-    @Column(name = "ALUN_NOME")
+    @Column(name = "NOME")
     @NotNull
     private String nome;
 
-    @Column(name = "ALUNO_MATRICULA")
+    @Column(name = "MATRICULA")
     @NotNull
     private Long matricula;
 
