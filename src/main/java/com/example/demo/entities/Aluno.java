@@ -1,17 +1,25 @@
-package com.example.entities;
+package com.example.demo.entities;
 
 import com.sun.istack.NotNull;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "TESTE", schema = "TST")
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Aluno {
 
     @Id
     @NotNull
-    Long id;
+    private Long id;
 
     @Column(name = "ALUNO_NOME")
     @NotNull
