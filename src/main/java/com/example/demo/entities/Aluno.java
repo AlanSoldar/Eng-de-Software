@@ -21,7 +21,8 @@ public class Aluno {
     @NotNull
     private Long id;
 
-    @Column(name = "ALUNO_NOME")
+    @Column(name = "NOME_ALUNO")
+    @Column(name = "ALUN_NOME")
     @NotNull
     private String nome;
 
