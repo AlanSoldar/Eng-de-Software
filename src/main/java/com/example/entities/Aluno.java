@@ -13,7 +13,7 @@ public class Aluno {
     @NotNull
     Long id;
 
-    @Column(name = "ALUNO_NOME")
+    @Column(name = "ALUN_NOME")
     @NotNull
     private String nome;
 
