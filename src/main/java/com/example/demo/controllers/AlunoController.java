@@ -2,11 +2,12 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Aluno;
 import com.example.demo.services.AlunoService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +18,8 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @GetMapping(value = "/aluno/{id}")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Aluno> getAluno(@PathVariable("id") Long id) {
-
-        System.out.println("olá mundo");
 
         Aluno aluno = alunoService.findAlunoById(id);
 
@@ -30,11 +30,27 @@ public class AlunoController {
     @GetMapping(value = "/aluno/nome/{nome}")
     public ResponseEntity<List<Aluno>> getAluno(@PathVariable("nome") String nome) {
 
-        System.out.println("olá mundo");
-
         List<Aluno> alunos = alunoService.findAlunoByName(nome);
 
         return ResponseEntity.ok().body(alunos);
+
+    }
+
+    @PostMapping(value = "/aluno")
+    public ResponseEntity<List<Aluno>> postAluno(@RequestBody Aluno aluno) {
+
+        alunoService.saveAluno(aluno);
+
+        return ResponseEntity.ok().build();
+
+    }
+
+    @DeleteMapping(value = "aluno/{id}")
+    public ResponseEntity<Aluno> deleteAluno(@PathVariable("id") Long id) {
+
+        alunoService.deleteAlunoById(id);
+
+        return ResponseEntity.ok().build();
 
     }
 }

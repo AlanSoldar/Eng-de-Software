@@ -3,9 +3,7 @@ package com.example.demo.entities;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -16,7 +14,7 @@ import javax.persistence.Id;
 public class Aluno {
 
     @Id
-    @NotNull
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "NOME")
