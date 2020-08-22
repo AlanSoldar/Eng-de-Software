@@ -19,7 +19,8 @@ public class AlunoController {
 
         System.out.println("olá mundo");
 
-        Aluno aluno = alunoService.findAlunoById(id);
+        //Aluno aluno = alunoService.findAlunoById(id);
+        Aluno aluno = new Aluno();
 
         return ResponseEntity.ok().body(aluno);
 
