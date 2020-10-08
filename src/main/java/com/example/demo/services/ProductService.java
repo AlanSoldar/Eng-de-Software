@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,20 @@ public class ProductService {
         }
 
         return products;
+
+    }
+
+    public List<Product> findAllProducts() {
+
+        List<Product> productList = new ArrayList<>();
+        productRepository.findAll().forEach(product -> productList.add(product));
+        System.out.println("retornando todos os produtos");
+
+        if (productList.isEmpty()) {
+            throw new NotFoundException("No products were found");
+        }
+
+        return productList;
 
     }
 

@@ -15,18 +15,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.List;
+
 @Controller
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/products/page")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Page<Product>> getProducts(@PageableDefault(page = 0, size = 5)
                                                      @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
 
         Page<Product> products = productService.findAllProducts(pageable);
+
+        return ResponseEntity.ok().body(products);
+
+    }
+
+    @GetMapping(value = "/products")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<List<Product>> getProducts() {
+
+        List<Product> products = productService.findAllProducts();
 
         return ResponseEntity.ok().body(products);
 
