@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "PRODUTO")
 @Builder
 @Getter
 @Setter
@@ -30,5 +30,9 @@ public class Product {
     @Column(name = "DESCRICAO")
     @NotNull
     private String descricao;
+
+    @Column(name = "USUARIO_ID")
+    @NotNull
+    private Long userId;
 
 }
