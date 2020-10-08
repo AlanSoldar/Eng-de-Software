@@ -1,41 +1,40 @@
 package com.example.demo.services;
 
-import com.example.demo.entities.Aluno;
+import com.example.demo.entities.User;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repositories.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class AlunoService {
+public class UserService {
 
     @Autowired
     private AlunoRepository alunoRepository;
 
-    public Aluno findAlunoById(Long id) {
+    public User findAlunoById(Long id) {
 
-        Aluno aluno = alunoRepository.findById(id).orElseThrow(()-> new NotFoundException("aluno not found"));
+        User user = alunoRepository.findById(id).orElseThrow(()-> new NotFoundException("aluno not found"));
         System.out.println("retornando aluno com id = " + id.toString());
 
-        return aluno;
+        return user;
 
     }
 
-    public List<Aluno> findAlunoByName(String nome) {
+    public List<User> findAlunoByName(String nome) {
 
-        List<Aluno> alunos = alunoRepository.findByNome(nome);
+        List<User> users = alunoRepository.findByNome(nome);
         System.out.println("retornando lista de alunos");
 
-        return alunos;
+        return users;
 
     }
 
-    public void saveAluno(Aluno aluno) {
+    public void saveAluno(User user) {
 
-        alunoRepository.save(aluno);
+        alunoRepository.save(user);
         System.out.println("aluno salvo");
 
     }

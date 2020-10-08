@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Aluno;
-import com.example.demo.services.AlunoService;
-import javassist.NotFoundException;
+import com.example.demo.entities.User;
+import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,40 +14,40 @@ import java.util.List;
 public class AlunoController {
 
     @Autowired
-    private AlunoService alunoService;
+    private UserService userService;
 
     @GetMapping(value = "/aluno/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Aluno> getAluno(@PathVariable("id") Long id) {
+    public ResponseEntity<User> getAluno(@PathVariable("id") Long id) {
 
-        Aluno aluno = alunoService.findAlunoById(id);
+        User user = userService.findAlunoById(id);
 
-        return ResponseEntity.ok().body(aluno);
+        return ResponseEntity.ok().body(user);
 
     }
 
     @GetMapping(value = "/aluno/nome/{nome}")
-    public ResponseEntity<List<Aluno>> getAluno(@PathVariable("nome") String nome) {
+    public ResponseEntity<List<User>> getAluno(@PathVariable("nome") String nome) {
 
-        List<Aluno> alunos = alunoService.findAlunoByName(nome);
+        List<User> users = userService.findAlunoByName(nome);
 
-        return ResponseEntity.ok().body(alunos);
+        return ResponseEntity.ok().body(users);
 
     }
 
     @PostMapping(value = "/aluno")
-    public ResponseEntity<List<Aluno>> postAluno(@RequestBody Aluno aluno) {
+    public ResponseEntity<List<User>> postAluno(@RequestBody User user) {
 
-        alunoService.saveAluno(aluno);
+        userService.saveAluno(user);
 
         return ResponseEntity.ok().build();
 
     }
 
     @DeleteMapping(value = "aluno/{id}")
-    public ResponseEntity<Aluno> deleteAluno(@PathVariable("id") Long id) {
+    public ResponseEntity<User> deleteAluno(@PathVariable("id") Long id) {
 
-        alunoService.deleteAlunoById(id);
+        userService.deleteAlunoById(id);
 
         return ResponseEntity.ok().build();
 

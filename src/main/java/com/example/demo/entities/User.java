@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aluno {
+public class User {
 
     @Id
     @Column(name = "ID")
@@ -21,8 +21,8 @@ public class Aluno {
     @NotNull
     private String nome;
 
-    @Column(name = "MATRICULA")
+    @Column(name = "IDADE")
     @NotNull
-    private Long matricula;
+    private Long idade;
 
 }
