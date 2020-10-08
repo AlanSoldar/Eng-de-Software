@@ -54,7 +54,7 @@ public class ProductService {
 
     }
 
-    public List<Product> findAlunoByName(String nome) {
+    public List<Product> findProductByName(String nome) {
 
         List<Product> products = productRepository.findByNome(nome);
         System.out.println("retornando lista de produtos com o nome = " + nome);
@@ -63,14 +63,14 @@ public class ProductService {
 
     }
 
-    public void saveAluno(Product product) {
+    public void saveProduct(Product product) {
 
         productRepository.save(product);
         System.out.println("produto salvo");
 
     }
 
-    public void deleteAlunoById(Long id) {
+    public void deleteProductById(Long id) {
 
         productRepository.deleteById(id);
         System.out.println("deletando produto com id = " + id.toString());
