@@ -22,6 +22,10 @@ public class ProductService {
         Page<Product> products = productRepository.findAll(page);
         System.out.println("retornando todos os produtos da pagina " + page.getPageNumber());
 
+        if (products.isEmpty()) {
+            throw new NotFoundException("No products were found");
+        }
+
         return products;
 
     }
