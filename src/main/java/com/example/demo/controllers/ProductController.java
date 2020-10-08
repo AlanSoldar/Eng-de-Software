@@ -23,7 +23,7 @@ public class ProductController {
 
     @GetMapping(value = "/products")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Page<Product>> getProducts(@PageableDefault(page = 0, size = 3)
+    public ResponseEntity<Page<Product>> getProducts(@PageableDefault(page = 0, size = 5)
                                                      @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
 
         Page<Product> products = productService.findAllProducts(pageable);

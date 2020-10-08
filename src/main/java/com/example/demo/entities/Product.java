@@ -27,4 +27,8 @@ public class Product {
     @NotNull
     private Long preço;
 
+    @Column(name = "DESCRICAO")
+    @NotNull
+    private String descricao;
+
 }
