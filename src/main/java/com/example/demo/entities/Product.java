@@ -25,7 +25,7 @@ public class Product {
 
     @Column(name = "PRECO")
     @NotNull
-    private Long preço;
+    private Long preco;
 
     @Column(name = "DESCRICAO")
     @NotNull
