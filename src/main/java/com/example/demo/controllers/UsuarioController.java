@@ -74,11 +74,11 @@ public class UsuarioController {
 
     }
 
-    @PostMapping(value = "/usuario/{usuarioId}/biblioteca/{produtoId}")
+    @PostMapping(value = "/usuario/{usuarioId}/produto/{produtoId}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Usuario> postBibliotecaDoUsuario(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId) {
 
-        //usuarioService.findBibliotecaByUsuarioId(usuarioId, produtoId);
+        usuarioService.postBibliotecaByUsuarioId(usuarioId, produtoId);
 
         return ResponseEntity.ok().build();
 

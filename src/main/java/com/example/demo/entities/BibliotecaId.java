@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BibliotecaId implements Serializable {
 
     @Column(name = "USUARIO_ID")
@@ -16,11 +19,4 @@ public class BibliotecaId implements Serializable {
     @Column(name = "PRODUTO_ID")
     private Long ProdutoId;
 
-    public Long getProdutoId() {
-        return ProdutoId;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
 }

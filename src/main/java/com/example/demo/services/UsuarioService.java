@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Biblioteca;
+import com.example.demo.entities.BibliotecaId;
 import com.example.demo.entities.Produto;
 import com.example.demo.entities.Usuario;
 import com.example.demo.exceptions.NotFoundException;
@@ -77,6 +78,13 @@ public class UsuarioService {
 
         return produtos;
 
+    }
+
+    public void postBibliotecaByUsuarioId(Long usuarioId, Long produtoId) {
+
+        Biblioteca biblioteca = Biblioteca.builder().id(BibliotecaId.builder().usuarioId(usuarioId).ProdutoId(produtoId).build()).build();
+
+        bibliotecaService.saveBiblioteca(biblioteca);
     }
 
 }

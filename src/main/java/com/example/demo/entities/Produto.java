@@ -9,6 +9,9 @@ import javax.persistence.Id;
 
 @Entity(name = "PRODUTO")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Produto {
 
     @Id
