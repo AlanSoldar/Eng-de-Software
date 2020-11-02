@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Product;
-import com.example.demo.services.LojaService;
-import com.example.demo.services.ProductService;
+import com.example.demo.entities.Produto;
+import com.example.demo.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,30 +18,30 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
 @Controller
-public class ProductController {
+public class ProdutoController {
 
     @Autowired
-    private ProductService productService;
+    private ProdutoService produtoService;
 
-    @GetMapping(value = "/products/page")
+    @GetMapping(value = "/produtos/page")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Page<Product>> getProducts(@PageableDefault(page = 0, size = 5)
+    public ResponseEntity<Page<Produto>> getProducts(@PageableDefault(page = 0, size = 5)
                                                      @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
 
-        Page<Product> products = productService.findAllProducts(pageable);
+        Page<Produto> produtos = produtoService.findAllProducts(pageable);
 
-        return ResponseEntity.ok().body(products);
+        return ResponseEntity.ok().body(produtos);
 
     }
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/produtos")
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<Produto>> getProducts() {
 
-        List<Product> products = productService.findAllProducts();
+        List<Produto> produtos = produtoService.findAllProducts();
 
-        return ResponseEntity.ok().body(products);
+        return ResponseEntity.ok().body(produtos);
 
     }
 

@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Product;
+import com.example.demo.entities.Produto;
 import com.example.demo.services.LojaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,12 +22,12 @@ public class LojaController {
 
     @GetMapping(value = "/loja")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Page<Product>> getProducts(@PageableDefault(page = 0, size = 3)
+    public ResponseEntity<Page<Produto>> getProducts(@PageableDefault(page = 0, size = 3)
                                                      @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
 
-        Page<Product> products = lojaService.listProducts(pageable);
+        Page<Produto> produtos = lojaService.listProducts(pageable);
 
-        return ResponseEntity.ok().body(products);
+        return ResponseEntity.ok().body(produtos);
 
     }
 

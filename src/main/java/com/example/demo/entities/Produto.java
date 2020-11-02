@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Produto {
 
     @Id
     @Column(name = "ID")

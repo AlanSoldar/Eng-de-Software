@@ -1,7 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.entities.Product;
-import com.example.demo.exceptions.NotFoundException;
+import com.example.demo.entities.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class LojaService {
 
     @Autowired
-    private ProductService productService;
+    private ProdutoService produtoService;
 
-    public Page<Product> listProducts(Pageable page) {
-        return productService.findAllProducts(page);
+    public Page<Produto> listProducts(Pageable page) {
+        return produtoService.findAllProducts(page);
 
     }
 

@@ -1,12 +1,13 @@
 package com.example.demo.repositories;
 
-import com.example.demo.entities.User;
+import com.example.demo.entities.Produto;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface AlunoRepository extends PagingAndSortingRepository<User, Long> {
-    public List<User> findByNome(String nome);
+public interface ProdutoRepository extends PagingAndSortingRepository<Produto, Long> {
+    public List<Produto> findByNome(String nome);
+
 }
