@@ -78,7 +78,7 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Usuario> postBibliotecaDoUsuario(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId) {
 
-        usuarioService.findBibliotecaByUsuarioId(usuarioId, produtoId);
+        //usuarioService.findBibliotecaByUsuarioId(usuarioId, produtoId);
 
         return ResponseEntity.ok().build();
 
