@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
-@Entity(name = "USUARIO")
+@Entity(name = "BIBLIOTECA")
 @Builder
 @Getter
 @Setter
