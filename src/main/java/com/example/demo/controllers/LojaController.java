@@ -22,10 +22,10 @@ public class LojaController {
 
     @GetMapping(value = "/loja")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Page<Produto>> getProducts(@PageableDefault(page = 0, size = 3)
+    public ResponseEntity<Page<Produto>> getProdutos(@PageableDefault(page = 0, size = 3)
                                                      @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
 
-        Page<Produto> produtos = lojaService.listProducts(pageable);
+        Page<Produto> produtos = lojaService.listProdutos(pageable);
 
         return ResponseEntity.ok().body(produtos);
 

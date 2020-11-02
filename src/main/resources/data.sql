@@ -8,7 +8,8 @@ CREATE TABLE USUARIO (
   USUARIO VARCHAR(250) NOT NULL,
   PASSWORD VARCHAR(250) NOT NULL,
   SALDO NUMERIC,
-  ENDERECO VARCHAR(1000)
+  ENDERECO VARCHAR(1000),
+  UNIQUE(USUARIO, PASSWORD)
 );
 
 INSERT INTO USUARIO (nome, idade, sexo, usuario, password, saldo, endereco) VALUES
@@ -40,3 +41,19 @@ INSERT INTO PRODUTO (NOME, PRECO, DESCRICAO, USUARIO_ID) VALUES
   ('Nier: Automata', 100000, 'é um jogo eletrônico de RPG de ação desenvolvido pela PlatinumGames e publicado pela Square Enix.',1),
   ('Monster Hunter', 90000, 'A franquia Monster Hunter é uma série de jogos de fantasia desenvolvida e publicada pela Capcom.',2)
 ;
+
+DROP TABLE IF EXISTS BIBLIOTECA;
+
+CREATE TABLE BIBLIOTECA (
+  USUARIO_ID INT NOT NULL,
+  PRODUTO_ID INT NOT NULL,
+  PRIMARY KEY (USUARIO_ID, PRODUTO_ID),
+  FOREIGN KEY (USUARIO_ID) REFERENCES USUARIO(ID),
+  FOREIGN KEY (PRODUTO_ID) REFERENCES PRODUTO(ID)
+);
+
+INSERT INTO BIBLIOTECA (USUARIO_ID, PRODUTO_ID) VALUES
+(1,1),
+(1,2),
+(1,8),
+(1,9)

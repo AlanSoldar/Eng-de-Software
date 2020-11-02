@@ -17,7 +17,7 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Page<Produto> findAllProducts(Pageable page) {
+    public Page<Produto> findAllProdutos(Pageable page) {
 
         Page<Produto> produtos = produtoRepository.findAll(page);
         System.out.println("retornando todos os produtos da pagina " + page.getPageNumber());
@@ -30,7 +30,7 @@ public class ProdutoService {
 
     }
 
-    public List<Produto> findAllProducts() {
+    public List<Produto> findAllProdutos() {
 
         List<Produto> produtoList = new ArrayList<>();
         produtoRepository.findAll().forEach(produto -> produtoList.add(produto));
@@ -44,7 +44,7 @@ public class ProdutoService {
 
     }
 
-    public Produto findProductById(Long id) {
+    public Produto findProdutoById(Long id) {
 
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> new NotFoundException("produto not found"));
         System.out.println("retornando produto com id = " + id.toString());
@@ -53,7 +53,7 @@ public class ProdutoService {
 
     }
 
-    public List<Produto> findProductByName(String nome) {
+    public List<Produto> findProdutoByName(String nome) {
 
         List<Produto> produtos = produtoRepository.findByNome(nome);
         System.out.println("retornando lista de produtos com o nome = " + nome);
@@ -62,14 +62,14 @@ public class ProdutoService {
 
     }
 
-    public void saveProduct(Produto produto) {
+    public void saveProduto(Produto produto) {
 
         produtoRepository.save(produto);
         System.out.println("produto salvo");
 
     }
 
-    public void deleteProductById(Long id) {
+    public void deleteProdutoById(Long id) {
 
         produtoRepository.deleteById(id);
         System.out.println("deletando produto com id = " + id.toString());

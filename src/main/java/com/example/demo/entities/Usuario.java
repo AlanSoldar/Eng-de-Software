@@ -6,11 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity(name = "USUARIO")
-@Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Usuario {
 
     @Id

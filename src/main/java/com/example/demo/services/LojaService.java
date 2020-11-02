@@ -12,8 +12,8 @@ public class LojaService {
     @Autowired
     private ProdutoService produtoService;
 
-    public Page<Produto> listProducts(Pageable page) {
-        return produtoService.findAllProducts(page);
+    public Page<Produto> listProdutos(Pageable page) {
+        return produtoService.findAllProdutos(page);
 
     }
 

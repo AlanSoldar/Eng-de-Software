@@ -25,10 +25,10 @@ public class ProdutoController {
 
     @GetMapping(value = "/produtos/page")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Page<Produto>> getProducts(@PageableDefault(page = 0, size = 5)
+    public ResponseEntity<Page<Produto>> getProdutos(@PageableDefault(page = 0, size = 5)
                                                      @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
 
-        Page<Produto> produtos = produtoService.findAllProducts(pageable);
+        Page<Produto> produtos = produtoService.findAllProdutos(pageable);
 
         return ResponseEntity.ok().body(produtos);
 
@@ -37,9 +37,9 @@ public class ProdutoController {
     @GetMapping(value = "/produtos")
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<List<Produto>> getProducts() {
+    public ResponseEntity<List<Produto>> getProdutos() {
 
-        List<Produto> produtos = produtoService.findAllProducts();
+        List<Produto> produtos = produtoService.findAllProdutos();
 
         return ResponseEntity.ok().body(produtos);
 

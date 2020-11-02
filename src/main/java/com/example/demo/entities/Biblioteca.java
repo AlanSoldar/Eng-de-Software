@@ -2,20 +2,16 @@ package com.example.demo.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity(name = "BIBLIOTECA")
-@Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Biblioteca {
 
     @EmbeddedId
     private BibliotecaId id;
 
+    public BibliotecaId getId() {
+        return id;
+    }
 }

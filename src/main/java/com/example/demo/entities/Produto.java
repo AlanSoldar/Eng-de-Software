@@ -8,11 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "PRODUTO")
-@Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Produto {
 
     @Id
