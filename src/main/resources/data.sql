@@ -3,15 +3,20 @@ DROP TABLE IF EXISTS USUARIO;
 CREATE TABLE USUARIO (
   ID INT AUTO_INCREMENT  PRIMARY KEY,
   NOME VARCHAR(250) NOT NULL,
-  MATRICULA NUMERIC NOT NULL
+  IDADE NUMERIC NOT NULL,
+  SEXO VARCHAR(250),
+  USUARIO VARCHAR(250) NOT NULL,
+  PASSWORD VARCHAR(250) NOT NULL,
+  SALDO NUMERIC,
+  ENDERECO VARCHAR(1000)
 );
 
-INSERT INTO USUARIO (nome, matricula) VALUES
-  ('alan', 123),
-  ('leo', 234),
-  ('roger', 345),
-  ('gabs', 456),
-  ('gui', 567);
+INSERT INTO USUARIO (nome, idade, sexo, usuario, password, saldo, endereco) VALUES
+  ('alan', 12, 'indefinido', 'alin', '1234testando', 5000, 'minha casa'),
+  ('leo', 15, 'helicoptero apache', 'Giba7', 'alice', 0, 'perto do nacional'),
+  ('roger', 18, 'masculino', 'roger', 'pacoca', 1000, null),
+  ('gabs', 20, 'feminino', 'gabigol9', 'miabrothers', 10000, 'longe bagarai'),
+  ('guilherme', 50, 'masculino', 'gui', 'password', 2000, null);
 
 DROP TABLE IF EXISTS PRODUTO;
 

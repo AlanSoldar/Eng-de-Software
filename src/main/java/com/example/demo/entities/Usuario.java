@@ -37,7 +37,6 @@ public class Usuario {
     private String password;
 
     @Column(name = "SALDO")
-    @NotNull
     private Long saldo;
 
     @Column(name = "ENDERECO")
