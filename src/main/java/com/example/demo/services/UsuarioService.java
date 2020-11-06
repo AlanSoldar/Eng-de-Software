@@ -1,11 +1,15 @@
 package com.example.demo.services;
 
+import com.example.demo.data_transfer_objects.PagamentoDTO;
 import com.example.demo.entities.Biblioteca;
 import com.example.demo.entities.BibliotecaId;
 import com.example.demo.entities.Produto;
 import com.example.demo.entities.Usuario;
-import com.example.demo.exceptions.NotFoundException;
+import com.example.demo.enums.TransacaoEnum;
+import com.example.demo.exceptions.HttpResponseService;
 import com.example.demo.repositories.UsuarioRepository;
+import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +18,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService extends BaseService{
+
+    private static final Integer NUMERO_DE_DIGITOS_DO_CARTAO = 16;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
     @Autowired
     private BibliotecaService bibliotecaService;
-
     @Autowired
     private ProdutoService produtoService;
 
     public Usuario findUsuarioById(Long id) {
 
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("usuario not found"));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> httpResponseService.notFound("usuario not found"));
         System.out.println("retornando usuario com id = " + id.toString());
 
         return usuario;
@@ -65,7 +69,7 @@ public class UsuarioService {
             return usuarioAutenticado.get();
         } else {
             System.out.println("usuario e senha informados não são validos");
-            throw new NotFoundException("usuario e senha informados não são validos");
+            throw httpResponseService.notFound("usuario e senha informados não são validos");
         }
     }
 
@@ -85,6 +89,33 @@ public class UsuarioService {
         Biblioteca biblioteca = Biblioteca.builder().id(BibliotecaId.builder().usuarioId(usuarioId).ProdutoId(produtoId).build()).build();
 
         bibliotecaService.saveBiblioteca(biblioteca);
+    }
+
+    public Usuario processTransacao(Long usuarioId, PagamentoDTO pagamentoDTO) {
+        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> httpResponseService.notFound("usuario nao encontrado"));
+
+        if (!NUMERO_DE_DIGITOS_DO_CARTAO.equals(pagamentoDTO.getNumeroDoCartao().toString().length())) {
+            throw httpResponseService.unauthorized("numero do cartao nao possui 16 digitos");
+        }
+
+        if (TransacaoEnum.CREDITO.equals(pagamentoDTO.getTransacao())) {
+                usuario.setSaldo(adicionaSaldo(usuario.getSaldo(), pagamentoDTO.getValor()));
+        } else if (TransacaoEnum.DEBITO.equals(pagamentoDTO.getTransacao())) {
+                usuario.setSaldo(removeSaldo(usuario.getSaldo(), pagamentoDTO.getValor()));
+        }
+        return usuarioRepository.save(usuario);
+    }
+
+    private Long adicionaSaldo(Long saldo, Long valor) {
+        return saldo+valor;
+    }
+
+    private Long removeSaldo(Long saldo, Long valor) {
+        Long valorFinal = saldo-valor;
+        if (valorFinal<0) {
+            throw httpResponseService.unauthorized("Valor debitado excede saldo na carteira do usuário");
+        }
+        return valorFinal;
     }
 
 }

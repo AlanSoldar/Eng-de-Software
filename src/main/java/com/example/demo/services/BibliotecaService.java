@@ -1,8 +1,12 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Biblioteca;
-import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repositories.BibliotecaRepository;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BibliotecaService {
+public class BibliotecaService extends BaseService {
 
     @Autowired
     private BibliotecaRepository bibliotecaRepository;
@@ -21,7 +25,7 @@ public class BibliotecaService {
         System.out.println("retornando todos os bibliotecas do usuario com id = " + id);
 
         if (bibliotecas.isEmpty()) {
-            throw new NotFoundException("No bibliotecas were found");
+            throw httpResponseService.notFound("No bibliotecas were found");
         }
 
         return bibliotecas;
@@ -35,7 +39,7 @@ public class BibliotecaService {
         System.out.println("retornando todos os bibliotecas");
 
         if (bibliotecaList.isEmpty()) {
-            throw new NotFoundException("No bibliotecas were found");
+            throw httpResponseService.notFound("No bibliotecas were found");
         }
 
         return bibliotecaList;
@@ -44,7 +48,7 @@ public class BibliotecaService {
 
     public Biblioteca findBibliotecaById(Long id) {
 
-        Biblioteca biblioteca = bibliotecaRepository.findById(id).orElseThrow(() -> new NotFoundException("biblioteca not found"));
+        Biblioteca biblioteca = bibliotecaRepository.findById(id).orElseThrow(() -> httpResponseService.notFound("biblioteca not found"));
         System.out.println("retornando biblioteca com id = " + id.toString());
 
         return biblioteca;
