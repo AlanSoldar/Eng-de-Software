@@ -13,7 +13,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.List;
 
 @Controller
-public class UsuarioController {
+public class UsuarioController extends BaseController {
 
     @Autowired
     private UsuarioService usuarioService;
@@ -25,7 +25,7 @@ public class UsuarioController {
         try {
             usuario = usuarioService.findUsuarioById(id);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().body(usuario);
@@ -38,7 +38,7 @@ public class UsuarioController {
         try {
             usuarios = usuarioService.findUsuarioByName(nome);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().body(usuarios);
@@ -51,7 +51,7 @@ public class UsuarioController {
         try {
             usuarioService.saveUsuario(usuario);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().build();
@@ -64,7 +64,7 @@ public class UsuarioController {
         try {
             usuarioService.deleteUsuarioById(id);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().build();
@@ -78,7 +78,7 @@ public class UsuarioController {
         try {
             usuarioAutenticado = usuarioService.autenticaUsuario(usuario, password);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().body(usuarioAutenticado);
@@ -92,7 +92,7 @@ public class UsuarioController {
         try {
             biblioteca = usuarioService.findBibliotecaByUsuarioId(id);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().body(biblioteca);
@@ -103,9 +103,9 @@ public class UsuarioController {
     public ResponseEntity postBibliotecaDoUsuario(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId) {
 
         try {
-            usuarioService.postBibliotecaByUsuarioId(usuarioId, produtoId);
+            usuarioService.adicionaProdutoNaBibliotecaDoUsuario(usuarioId, produtoId);
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
         return ResponseEntity.ok().build();
@@ -118,7 +118,7 @@ public class UsuarioController {
         try {
             return ResponseEntity.ok().body(usuarioService.processTransacao(usuarioId, pagamentoDTO));
         } catch (HttpClientErrorException exception) {
-            return ResponseEntity.status(exception.getStatusCode()).body(exception.getLocalizedMessage());
+            return createResponseEntity(exception);
         }
 
     }

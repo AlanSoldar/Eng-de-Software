@@ -6,19 +6,17 @@ import com.example.demo.entities.BibliotecaId;
 import com.example.demo.entities.Produto;
 import com.example.demo.entities.Usuario;
 import com.example.demo.enums.TransacaoEnum;
-import com.example.demo.exceptions.HttpResponseService;
 import com.example.demo.repositories.UsuarioRepository;
-import lombok.Builder;
-import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class UsuarioService extends BaseService{
+public class UsuarioService extends BaseService {
 
     private static final Integer NUMERO_DE_DIGITOS_DO_CARTAO = 16;
 
@@ -84,7 +82,7 @@ public class UsuarioService extends BaseService{
 
     }
 
-    public void postBibliotecaByUsuarioId(Long usuarioId, Long produtoId) {
+    public void adicionaProdutoNaBibliotecaDoUsuario(Long usuarioId, Long produtoId) {
 
         Biblioteca biblioteca = Biblioteca.builder().id(BibliotecaId.builder().usuarioId(usuarioId).ProdutoId(produtoId).build()).build();
 
@@ -92,30 +90,43 @@ public class UsuarioService extends BaseService{
     }
 
     public Usuario processTransacao(Long usuarioId, PagamentoDTO pagamentoDTO) {
-        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> httpResponseService.notFound("usuario nao encontrado"));
-
+        this.validatePagamentoDTO(pagamentoDTO);
         if (!NUMERO_DE_DIGITOS_DO_CARTAO.equals(pagamentoDTO.getNumeroDoCartao().toString().length())) {
             throw httpResponseService.unauthorized("numero do cartao nao possui 16 digitos");
         }
 
         if (TransacaoEnum.CREDITO.equals(pagamentoDTO.getTransacao())) {
-                usuario.setSaldo(adicionaSaldo(usuario.getSaldo(), pagamentoDTO.getValor()));
+            return adicionaSaldo(usuarioId, pagamentoDTO.getValor());
         } else if (TransacaoEnum.DEBITO.equals(pagamentoDTO.getTransacao())) {
-                usuario.setSaldo(removeSaldo(usuario.getSaldo(), pagamentoDTO.getValor()));
+            return removeSaldo(usuarioId, pagamentoDTO.getValor());
+        } else {
+            throw httpResponseService.unauthorized("operacao invalida. transacao deve ser DEBITO ou CREDITO");
         }
+    }
+
+    public Usuario adicionaSaldo(Long usuarioId, Long valor) {
+        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> httpResponseService.notFound("usuario nao encontrado"));
+        usuario.setSaldo(usuario.getSaldo() + valor);
+
         return usuarioRepository.save(usuario);
     }
 
-    private Long adicionaSaldo(Long saldo, Long valor) {
-        return saldo+valor;
-    }
+    public Usuario removeSaldo(Long usuarioId, Long valor) {
+        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> httpResponseService.notFound("usuario nao encontrado"));
 
-    private Long removeSaldo(Long saldo, Long valor) {
-        Long valorFinal = saldo-valor;
-        if (valorFinal<0) {
+        Long valorFinal = usuario.getSaldo() - valor;
+        if (valorFinal < 0) {
             throw httpResponseService.unauthorized("Valor debitado excede saldo na carteira do usuário");
         }
-        return valorFinal;
+
+        usuario.setSaldo(valorFinal);
+        return usuarioRepository.save(usuario);
+    }
+
+    public void validatePagamentoDTO(PagamentoDTO pagamentoDTO) {
+        if (Objects.isNull(pagamentoDTO.getValor()) || Objects.isNull(pagamentoDTO.getNumeroDoCartao()) || Objects.isNull(pagamentoDTO.getTransacao())) {
+            httpResponseService.badRequest("usuarioId e produtoId nao podem ser nulos");
+        }
     }
 
 }

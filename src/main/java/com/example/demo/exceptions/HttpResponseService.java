@@ -17,4 +17,8 @@ public class HttpResponseService {
     public HttpClientErrorException unauthorized(String message) {
         return HttpClientErrorException.create(message, HttpStatus.UNAUTHORIZED, message,HttpHeaders.EMPTY, null, null);
     }
+
+    public HttpClientErrorException badRequest(String message) {
+        return HttpClientErrorException.create(message, HttpStatus.BAD_REQUEST, message,HttpHeaders.EMPTY, null, null);
+    }
 }
