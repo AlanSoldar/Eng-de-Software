@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.data_transfer_objects.ComunidadeDTO;
+import com.example.demo.data_transfer_objects.InteresseDTO;
 import com.example.demo.services.ComunidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
