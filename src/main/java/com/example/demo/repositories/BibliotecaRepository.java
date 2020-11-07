@@ -11,4 +11,6 @@ import java.util.List;
 public interface BibliotecaRepository extends PagingAndSortingRepository<Biblioteca, Long> {
     List<Biblioteca> findById_UsuarioId(Long usuarioId);
 
+    List<Biblioteca> findById_ProdutoId(Long produtoId);
+
 }

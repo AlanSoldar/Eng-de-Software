@@ -82,9 +82,20 @@ public class UsuarioService extends BaseService {
 
     }
 
+    public List<Produto> findBibliotecaByProdutoId(Long id) {
+
+        List<Biblioteca> bibliotecas = bibliotecaService.findBibliotecasByProdutoId(id);
+        List<Produto> produtos = new ArrayList<>();
+
+        bibliotecas.forEach(biblioteca -> produtos.add(produtoService.findProdutoById(biblioteca.getId().getProdutoId())));
+
+        return produtos;
+
+    }
+
     public void adicionaProdutoNaBibliotecaDoUsuario(Long usuarioId, Long produtoId) {
 
-        Biblioteca biblioteca = Biblioteca.builder().id(BibliotecaId.builder().usuarioId(usuarioId).ProdutoId(produtoId).build()).build();
+        Biblioteca biblioteca = Biblioteca.builder().id(BibliotecaId.builder().usuarioId(usuarioId).produtoId(produtoId).build()).build();
 
         bibliotecaService.saveBiblioteca(biblioteca);
     }

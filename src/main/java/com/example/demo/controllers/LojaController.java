@@ -23,7 +23,7 @@ public class LojaController extends BaseController {
     private LojaService lojaService;
 
     @GetMapping(value = "/loja")
-    public ResponseEntity getProdutos(@PageableDefault(page = 0, size = 3)
+    public ResponseEntity getProdutos(@PageableDefault(page = 0, size = 20)
                                       @SortDefault.SortDefaults({@SortDefault(sort = "nome", direction = Sort.Direction.ASC)}) Pageable pageable) {
         try {
             return ResponseEntity.ok().body(lojaService.listProdutos(pageable));

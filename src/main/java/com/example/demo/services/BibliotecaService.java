@@ -32,6 +32,19 @@ public class BibliotecaService extends BaseService {
 
     }
 
+    public List<Biblioteca> findBibliotecasByProdutoId(Long id) {
+
+        List<Biblioteca> bibliotecas = bibliotecaRepository.findById_ProdutoId(id);
+        System.out.println("retornando produto na biblioteca do usuario. produtoId = " + id);
+
+        if (bibliotecas.isEmpty()) {
+            throw httpResponseService.notFound("No bibliotecas were found");
+        }
+
+        return bibliotecas;
+
+    }
+
     public List<Biblioteca> findAllBibliotecas() {
 
         List<Biblioteca> bibliotecaList = new ArrayList<>();
