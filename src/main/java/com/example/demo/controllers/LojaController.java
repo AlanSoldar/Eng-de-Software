@@ -33,8 +33,10 @@ public class LojaController extends BaseController {
     }
 
     @PostMapping(value = "/loja")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity getProdutos(@RequestBody LojaDTO lojaDTO) {
         try {
+            System.out.println("cheguei");
             lojaService.venderProdutoParaUsuario(lojaDTO);
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
