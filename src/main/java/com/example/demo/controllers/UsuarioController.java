@@ -1,10 +1,15 @@
 package com.example.demo.controllers;
 
+import com.example.demo.data_transfer_objects.InteresseDTO;
 import com.example.demo.data_transfer_objects.PagamentoDTO;
+import com.example.demo.entities.Interesse;
+import com.example.demo.entities.InteresseId;
 import com.example.demo.entities.Produto;
 import com.example.demo.entities.Usuario;
+import com.example.demo.services.InteresseService;
 import com.example.demo.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +23,8 @@ public class UsuarioController extends BaseController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private InteresseService interesseService;
 
     @GetMapping(value = "/usuario/{id}")
     public ResponseEntity getUsuario(@PathVariable("id") Long id) {
@@ -123,4 +130,18 @@ public class UsuarioController extends BaseController {
         }
 
     }
+
+    @PostMapping(value = "usuario/{usuarioId}/interesses")
+    public ResponseEntity postInteresse(@PathVariable("interessadoId") Long interessadoId
+            , @PathVariable("donoId") Long donoId
+            , @PathVariable("produtoId)") Long produtoiD) {
+        try {
+            interesseService.demonstrarInteresse(new Interesse(new InteresseId(donoId, interessadoId, produtoiD)));
+        } catch (HttpClientErrorException exception) {
+            return createResponseEntity(exception);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
 }

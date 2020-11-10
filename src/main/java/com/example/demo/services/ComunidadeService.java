@@ -1,8 +1,10 @@
 package com.example.demo.services;
 
 import com.example.demo.data_transfer_objects.ComunidadeDTO;
+import com.example.demo.data_transfer_objects.InteresseDTO;
 import com.example.demo.entities.Comunidade;
 import com.example.demo.entities.ComunidadeId;
+import com.example.demo.entities.Interesse;
 import com.example.demo.repositories.ComunidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,5 +60,4 @@ public class ComunidadeService extends BaseService {
             httpResponseService.badRequest("usuarioId e produtoId nao podem ser nulos");
         }
     }
-
 }
