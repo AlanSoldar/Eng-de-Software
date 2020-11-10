@@ -79,7 +79,6 @@ public class UsuarioController extends BaseController {
     }
 
     @GetMapping(value = "/usuario/autenticar", params = {"usuario", "password"})
-    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity autenticaUsuario(@RequestParam("usuario") String usuario, @RequestParam("password") String password) {
         Usuario usuarioAutenticado;
 
