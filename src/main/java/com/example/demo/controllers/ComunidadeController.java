@@ -1,13 +1,8 @@
 package com.example.demo.controllers;
 
 import com.example.demo.data_transfer_objects.ComunidadeDTO;
-import com.example.demo.data_transfer_objects.InteresseDTO;
 import com.example.demo.services.ComunidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,9 +18,10 @@ public class ComunidadeController extends BaseController {
     private ComunidadeService comunidadeService;
 
     @GetMapping(value = "/comunidade")
-    public ResponseEntity getProdutos(@PageableDefault(page = 0, size = 20) Pageable pageable) {
+    public ResponseEntity getProdutos() {
         try {
-            return ResponseEntity.ok().body(comunidadeService.listProdutos(pageable));
+            System.out.println("cheguei");
+            return ResponseEntity.ok().body(comunidadeService.listProdutos());
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
         }
