@@ -1,12 +1,14 @@
 package com.example.demo.repositories;
 
 import com.example.demo.entities.Interesse;
+import com.example.demo.entities.InteresseId;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InteresseRepository extends PagingAndSortingRepository<Interesse, Long> {
-    List<Interesse> findById_DonoId(Long DonoId);
+    Optional<InteresseId> findByInteresseId(Long donoId, Long interessadoId, Long produtoId);
 }
