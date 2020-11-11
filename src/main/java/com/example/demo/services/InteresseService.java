@@ -31,10 +31,10 @@ public class InteresseService {
 
         interesseRepository.save(interesse);
 
-        interesseRepository.findByInteresseId(interesse.getId().getInteressadoId(),interesse.getId().getDonoId(),interesse.getId().getProdutoId())
-                .ifPresent(interesse1 -> {
-
-                });
+//        interesseRepository.findByInteresseId(interesse.getId().getInteressadoId(),interesse.getId().getDonoId(),interesse.getId().getProdutoId())
+//                .ifPresent(interesse1 -> {
+//
+//                });
         System.out.println("interesse salvo");
     }
 }

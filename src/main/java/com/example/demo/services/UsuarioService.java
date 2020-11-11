@@ -102,9 +102,6 @@ public class UsuarioService extends BaseService {
 
     public void removeProdutoNaBibliotecaDoUsuario(Long usuarioId, Long produtoId) {
 
-        Biblioteca biblioteca = Biblioteca.builder().id(BibliotecaId.builder().usuarioId(usuarioId).produtoId(produtoId).build()).build();
-
-        bibliotecaService.saveBiblioteca(biblioteca);
     }
 
     public Usuario processTransacao(Long usuarioId, PagamentoDTO pagamentoDTO) {

@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface InteresseRepository extends PagingAndSortingRepository<Interesse, Long> {
-    Optional<InteresseId> findByInteresseId(Long donoId, Long interessadoId, Long produtoId);
+    //Optional<InteresseId> findByInteresseId(Long donoId, Long interessadoId, Long produtoId);
 }
