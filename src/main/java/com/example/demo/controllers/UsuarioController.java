@@ -136,7 +136,7 @@ public class UsuarioController extends BaseController {
             , @PathVariable("donoId") Long donoId
             , @PathVariable("produtoId)") Long produtoiD) {
         try {
-            interesseService.demonstrarInteresse(new Interesse(new InteresseId(donoId, interessadoId, produtoiD)));
+            interesseService.processarInteresse(new Interesse(new InteresseId(donoId, interessadoId, produtoiD)));
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
         }
