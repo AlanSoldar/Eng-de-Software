@@ -15,7 +15,7 @@ CREATE TABLE USUARIO (
 INSERT INTO USUARIO (nome, idade, sexo, usuario, password, saldo, endereco) VALUES
   ('alan', 12, 'indefinido', 'alin', '1234testando', 5000, 'minha casa'),
   ('leo', 15, 'helicoptero apache', 'Giba7', 'alice', 0, 'perto do nacional'),
-  ('roger', 18, 'masculino', 'roger', 'pacoca', 1000, null),
+  ('roger', 18, 'masculino', 'roger', 'pacoca', 6000, null),
   ('gabs', 20, 'feminino', 'gabigol9', 'miabrothers', 10000, 'longe bagarai'),
   ('guilherme', 50, 'masculino', 'gui', 'password', 2000, null);
 
