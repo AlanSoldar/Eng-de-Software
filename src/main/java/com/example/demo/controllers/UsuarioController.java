@@ -1,6 +1,5 @@
 package com.example.demo.controllers;
 
-import com.example.demo.data_transfer_objects.InteresseDTO;
 import com.example.demo.data_transfer_objects.PagamentoDTO;
 import com.example.demo.entities.Interesse;
 import com.example.demo.entities.InteresseId;
@@ -9,7 +8,6 @@ import com.example.demo.entities.Usuario;
 import com.example.demo.services.InteresseService;
 import com.example.demo.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -136,7 +134,14 @@ public class UsuarioController extends BaseController {
             , @PathVariable("donoId") Long donoId
             , @PathVariable("produtoId)") Long produtoiD) {
         try {
-            interesseService.processarInteresse(new Interesse(new InteresseId(donoId, interessadoId, produtoiD)));
+            interesseService.processarInteresse(Interesse
+                    .builder().id(InteresseId
+                            .builder()
+                            .donoId(donoId)
+                            .interessadoId(interessadoId)
+                            .produtoId(produtoiD)
+                            .build())
+                    .build());
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
         }

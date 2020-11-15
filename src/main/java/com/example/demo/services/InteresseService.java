@@ -55,8 +55,6 @@ public class InteresseService extends BaseService {
                 .ifPresent(interesseMatch -> {
                     if (interesseId.getDonoId().equals(interesseMatch.getId().getInteressadoId()) && interesseId.getInteressadoId().equals(interesseMatch.getId().getDonoId()))
                         processarMatch(
-                                //usuarioRepository.findById(interesseId.getDonoId()).orElseThrow(() -> httpResponseService.notFound("No user was found")),
-                                //usuarioRepository.findById(interesseId.getInteressadoId()).orElseThrow(() -> httpResponseService.notFound("No user was found")),
                                 interesseId.getDonoId(),
                                 interesseId.getInteressadoId(),
                                 interesseId.getProdutoId(),
