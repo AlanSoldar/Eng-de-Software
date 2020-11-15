@@ -61,7 +61,7 @@ public class UsuarioService extends BaseService {
 
     public Usuario autenticaUsuario(String usuario, String password) {
 
-        Optional<Usuario> usuarioAutenticado = usuarioRepository.findByUsuarioAndPassword(usuario, password);
+        Optional<Usuario> usuarioAutenticado = usuarioRepository.findByUsuarioAndSenha(usuario, password);
         if (usuarioAutenticado.isPresent()) {
             System.out.println("usuario autenticado");
             return usuarioAutenticado.get();

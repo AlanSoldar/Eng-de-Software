@@ -12,5 +12,5 @@ public interface UsuarioRepository extends PagingAndSortingRepository<Usuario, L
 
     List<Usuario> findByNome(String nome);
 
-    Optional<Usuario> findByUsuarioAndPassword(String usuario, String password);
+    Optional<Usuario> findByUsuarioAndSenha(String usuario, String password);
 }
