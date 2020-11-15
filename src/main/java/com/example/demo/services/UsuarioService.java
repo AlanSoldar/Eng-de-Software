@@ -145,7 +145,7 @@ public class UsuarioService extends BaseService {
     }
 
     public void validateUsuario(Usuario usuario) {
-        if (Objects.isNull(usuario.getNome()) || Objects.isNull(usuario.getIdade()) || Objects.isNull(usuario.getUsuario()) || Objects.isNull(usuario.getPassword())) {
+        if (Objects.isNull(usuario.getNome()) || Objects.isNull(usuario.getIdade()) || Objects.isNull(usuario.getUsuario()) || Objects.isNull(usuario.getSenha())) {
             httpResponseService.badRequest("usuarioId e produtoId nao podem ser nulos");
         }
 
