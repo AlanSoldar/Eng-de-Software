@@ -1,13 +1,17 @@
 package com.example.demo.mlp;
 
 import com.example.demo.entities.Produto;
+import com.example.demo.entities.Usuario;
 
 public class Java10 {
     public static void main(String[] args) {
         //Local variable type inference -> var
 
-        //var usuario;
         var produto = new Produto();
+
+        //var usuario;
+
+//        produto = new Usuario();
 
         System.out.println(produto);
 

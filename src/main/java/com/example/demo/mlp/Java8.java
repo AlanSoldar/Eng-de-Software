@@ -41,7 +41,7 @@ public class Java8 {
 
         System.out.println("\nDepois com lambda\n");
 
-        shopList.forEach((Produto produto) -> System.out.println(produto));
+        shopList.forEach(System.out::println);
 
 
         //----------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ public class Java8 {
 
         shopList = Ultilidades.resetList(shopList);
 
-        shopList.sort((o1, o2) -> o1.getPreco().compareTo(o2.getPreco()));
+        shopList.sort((elemento1, elemento2) -> elemento1.getPreco().compareTo(elemento2.getPreco()));
 
         shopList.forEach(System.out::println);
 
@@ -147,6 +147,7 @@ public class Java8 {
         }
 
         public static Usuario findUsuarioById(Long id) {
+
             if (id.equals(1L))
                 return Usuario.builder().id(1L).nome("joao").build();
             else
