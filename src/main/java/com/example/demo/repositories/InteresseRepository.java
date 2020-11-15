@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface InteresseRepository extends PagingAndSortingRepository<Interesse, Long> {
-    //Optional<InteresseId> findByInteresseId(Long donoId, Long interessadoId, Long produtoId);
+public interface InteresseRepository extends PagingAndSortingRepository<Interesse, InteresseId> {
+
+    Optional<Interesse> findByIdDonoIdAndIdInteressadoId(Long donoId, Long interessadoId);
+
+    Optional<Interesse> findByIdDonoIdAndIdInteressadoIdAndIdProdutoId(Long donoId, Long interessadoId, Long produtoId);
 }
