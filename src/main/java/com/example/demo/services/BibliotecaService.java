@@ -1,12 +1,8 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Biblioteca;
+import com.example.demo.entities.BibliotecaId;
 import com.example.demo.repositories.BibliotecaRepository;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +55,7 @@ public class BibliotecaService extends BaseService {
 
     }
 
-    public Biblioteca findBibliotecaById(Long id) {
+    public Biblioteca findBibliotecaById(BibliotecaId id) {
 
         Biblioteca biblioteca = bibliotecaRepository.findById(id).orElseThrow(() -> httpResponseService.notFound("biblioteca not found"));
         System.out.println("retornando biblioteca com id = " + id.toString());
@@ -75,7 +71,7 @@ public class BibliotecaService extends BaseService {
 
     }
 
-    public void deleteBibliotecaById(Long id) {
+    public void deleteBibliotecaById(BibliotecaId id) {
 
         bibliotecaRepository.deleteById(id);
         System.out.println("deletando biblioteca com id = " + id.toString());

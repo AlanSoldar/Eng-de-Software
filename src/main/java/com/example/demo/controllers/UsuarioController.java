@@ -83,7 +83,6 @@ public class UsuarioController extends BaseController {
         Usuario usuarioAutenticado;
 
         try {
-            System.out.println("heyo");
             usuarioAutenticado = usuarioService.autenticaUsuario(usuario, password);
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
