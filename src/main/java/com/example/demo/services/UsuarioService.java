@@ -144,4 +144,22 @@ public class UsuarioService extends BaseService {
         }
     }
 
+    public void validateUsuario(Usuario usuario) {
+        if (Objects.isNull(usuario.getNome()) || Objects.isNull(usuario.getIdade()) || Objects.isNull(usuario.getUsuario()) || Objects.isNull(usuario.getSenha())) {
+            httpResponseService.badRequest("usuarioId e produtoId nao podem ser nulos");
+        }
+
+        if (Objects.nonNull(usuario.getSaldo())) {
+            usuario.setSaldo(0L);
+        }
+
+        if (Objects.nonNull(usuario.getSexo())) {
+            usuario.setSexo("Indefinido");
+        }
+
+        if (Objects.nonNull(usuario.getEndereco())) {
+            usuario.setEndereco("Indefinido");
+        }
+    }
+
 }
