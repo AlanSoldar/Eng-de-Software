@@ -100,6 +100,10 @@ public class UsuarioService extends BaseService {
         bibliotecaService.saveBiblioteca(biblioteca);
     }
 
+    public void removeProdutoNaBibliotecaDoUsuario(Long usuarioId, Long produtoId) {
+
+    }
+
     public Usuario processTransacao(Long usuarioId, PagamentoDTO pagamentoDTO) {
         this.validatePagamentoDTO(pagamentoDTO);
         if (!NUMERO_DE_DIGITOS_DO_CARTAO.equals(pagamentoDTO.getNumeroDoCartao().toString().length())) {

@@ -78,6 +78,7 @@ public class UsuarioController extends BaseController {
 
     }
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/usuario/autenticar", params = {"usuario", "password"})
     public ResponseEntity autenticaUsuario(@RequestParam("usuario") String usuario, @RequestParam("password") String password) {
         Usuario usuarioAutenticado;
@@ -135,7 +136,7 @@ public class UsuarioController extends BaseController {
             , @PathVariable("donoId") Long donoId
             , @PathVariable("produtoId)") Long produtoiD) {
         try {
-            interesseService.demonstrarInteresse(new Interesse(new InteresseId(donoId, interessadoId, produtoiD)));
+            interesseService.processarInteresse(new Interesse(new InteresseId(donoId, interessadoId, produtoiD)));
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
         }
