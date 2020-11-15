@@ -2,6 +2,9 @@ package com.example.demo.mlp;
 
 public class Java15 {
     public static void main(String[] args) {
+
+        //Text Blocks
+
         String sqlAntes = "CREATE TABLE PRODUTO (" +
                 "ID INT AUTO_INCREMENT  PRIMARY KEY," +
                 "NOME VARCHAR(250) NOT NULL," +
