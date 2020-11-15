@@ -13,6 +13,8 @@ import javax.persistence.*;
 public class Usuario {
 
     @Id
+    @SequenceGenerator(name="seq", initialValue=8, allocationSize=100)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     @Column(name = "ID")
     private Long id;
 
