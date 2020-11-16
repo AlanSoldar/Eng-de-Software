@@ -34,16 +34,16 @@ INSERT INTO PRODUTO (NOME, PRECO, DESCRICAO) VALUES
   ('Among Us', 1000, 'Party game de interpretacao com o objetivo de ou desmascarar o impostor ou eliminar todos os tripulantes.'),
   ('Persona 5', 120000, 'RPG focado na historia do dia dia de um grupo de jovens que descobre um mundo fantastico.'),
   ('Final Fantasy XIV', 12000, 'MMORPG da franquia final fantasy inspirado em world of warcraft.'),
-  ('God of War', 80000, 'God of War é uma serie de jogos eletrônicos de acao-aventura vagamente baseado nas mitologias grega e nordica.'),
-  ('Life is Strange', 30000, 'Life Is Strange é um jogo eletronico episodico de aventura grafica.'),
-  ('Nier: Automata', 100000, 'é um jogo eletronico de RPG de acao desenvolvido pela PlatinumGames e publicado pela Square Enix.'),
-  ('Monster Hunter', 90000, 'A franquia Monster Hunter é uma serie de jogos de fantasia desenvolvida e publicada pela Capcom.'),
+  ('God of War', 80000, 'God of War e uma serie de jogos eletrônicos de acao-aventura vagamente baseado nas mitologias grega e nordica.'),
+  ('Life is Strange', 30000, 'Life Is Strange e um jogo eletronico episodico de aventura grafica.'),
+  ('Nier: Automata', 100000, 'e um jogo eletronico de RPG de acao desenvolvido pela PlatinumGames e publicado pela Square Enix.'),
+  ('Monster Hunter', 90000, 'A franquia Monster Hunter e uma serie de jogos de fantasia desenvolvida e publicada pela Capcom.'),
   ('Assassins Creed: Valhalla', 150000, 'Assassins Creed Valhalla, o mais novo jogo da franquia Assassins Creed.'),
   ('Kingdom Hearts 3', 100000, 'KINGDOM HEARTS III conta a historia do poder da amizade enquanto Sora e seus amigos embarcam em uma perigosa aventura.'),
-  ('Phasmophobia', 27000, 'Phasmophobia é um terror psicologico cooperativo online para 4 jogadores'),
+  ('Phasmophobia', 27000, 'Phasmophobia e um terror psicologico cooperativo online para 4 jogadores'),
   ('Fall Guys: Ultimate Knockout', 38000, 'Fall Guys: Ultimate Knockout reune hordas de participantes online em disparada por rounds e rounds cada vez mais caóticos ate sobrar um unico vencedor!'),
   ('Nioh', 42000, 'Prepare sua espada: combates intensos estao à sua espera em todos os cantos desse RPG de acao que se passa em uma grande regiao devastada pela guerra civil.'),
-  ('Terraria', 20000, 'Cave, lute, explore, construa! Nada é impossível nesse jogo de aventura cheio de acao. O mundo é a sua tela de pintar e o chao em si é a sua tinta.');
+  ('Terraria', 20000, 'Cave, lute, explore, construa! Nada e impossível nesse jogo de aventura cheio de acao. O mundo e a sua tela de pintar e o chao em si e a sua tinta.');
 ;
 
 DROP TABLE IF EXISTS BIBLIOTECA;
