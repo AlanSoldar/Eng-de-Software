@@ -1,8 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.entities.Chat;
-import com.example.demo.entities.ChatId;
-import com.example.demo.entities.ChatConteudo;
+import com.example.demo.data_transfer_objects.ChatDTO;
+import com.example.demo.entities.*;
 import com.example.demo.repositories.ChatRepository;
 import com.example.demo.repositories.ChatConteudoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +50,39 @@ public class ChatService extends BaseService {
         return chatConteudoRepository.findByUsuario1IdAndUsuario2Id(usuario_1_id, usuario_2_id);
     }
 
+    public void publicarChat(ChatDTO chatDTO) {
+        validateChatDTO(chatDTO);
+        chatRepository.save(Chat
+                .builder()
+                .id(ChatId
+                        .builder()
+                        .usuario1Id(chatDTO.getUsuario1Id())
+                        .usuario2Id(chatDTO.getUsuario2Id())
+                        .build())
+                .resolvidoFlag(chatDTO.getResolvidoFlag())
+                .build());
+        System.out.println("chat publicado");
+    }
+
+    public void validateChatDTO(ChatDTO chatDTO) {
+        if (Objects.isNull(chatDTO.getUsuario1Id()) || Objects.isNull(chatDTO.getUsuario2Id())) {
+            httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
+        }
+    }
+
+    public void publicarChatConteudo(ChatConteudo chatConteudo) {
+        validateChatConteudo(chatConteudo);
+        chatConteudoRepository.save(chatConteudo);
+        System.out.println("conteudo publicado");
+    }
+
+    public void validateChatConteudo(ChatConteudo chatConteudo) {
+        if (Objects.isNull(chatConteudo.getUsuario1Id()) || Objects.isNull(chatConteudo.getUsuario2Id())) {
+            httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
+        }
+        else if (chatConteudo.getUsuario1Id() < chatConteudo.getUsuario2Id()) {
+            httpResponseService.badRequest("usuario1Id deve ser menor que usuario2Id");
+        }
+    }
 
 }

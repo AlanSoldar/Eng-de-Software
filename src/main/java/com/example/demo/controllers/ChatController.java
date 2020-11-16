@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.data_transfer_objects.ChatDTO;
 import com.example.demo.entities.Chat;
 import com.example.demo.entities.ChatConteudo;
 import com.example.demo.services.ChatService;
@@ -73,6 +74,28 @@ public class ChatController extends BaseController {
 
         return ResponseEntity.ok().body(conteudo);
 
+    }
+
+    @PostMapping(value = "/chat")
+    public ResponseEntity postChat(@RequestBody ChatDTO ChatDTO) {
+        try {
+            chatService.publicarChat(ChatDTO);
+        } catch (HttpClientErrorException exception) {
+            return createResponseEntity(exception);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/chat/conteudo")
+    public ResponseEntity postChatConteudo(@RequestBody ChatConteudo ChatConteudo) {
+        try {
+            chatService.publicarChatConteudo(ChatConteudo);
+        } catch (HttpClientErrorException exception) {
+            return createResponseEntity(exception);
+        }
+
+        return ResponseEntity.ok().build();
     }
 
 }
