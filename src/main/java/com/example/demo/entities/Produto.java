@@ -30,8 +30,4 @@ public class Produto {
     @NotNull
     private String descricao;
 
-    @Column(name = "USUARIO_ID")
-    @NotNull
-    private Long userId;
-
 }
