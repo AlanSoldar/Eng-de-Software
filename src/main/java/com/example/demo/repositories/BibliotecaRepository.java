@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface BibliotecaRepository extends PagingAndSortingRepository<Biblioteca, BibliotecaId> {
-    List<Biblioteca> findById_UsuarioId(Long usuarioId);
+    List<Biblioteca> findByIdUsuarioId(Long usuarioId);
 
     List<Biblioteca> findById_ProdutoId(Long produtoId);
 

@@ -6,21 +6,79 @@ import com.example.demo.entities.Interesse;
 import com.example.demo.entities.InteresseId;
 import com.example.demo.repositories.BibliotecaRepository;
 import com.example.demo.repositories.InteresseRepository;
-import com.example.demo.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+
 @Service
 public class InteresseService extends BaseService {
     @Autowired
     private InteresseRepository interesseRepository;
-    private UsuarioRepository usuarioRepository;
+    @Autowired
     private BibliotecaRepository bibliotecaRepository;
 
     public Page<Interesse> listInteresses(Pageable page) {
         return interesseRepository.findAll(page);
+    }
+
+    /**
+     * Retorna uma lista de interessados no usuario
+     *
+     * @param donoId
+     * @return List<Interesse>
+     */
+    public List<Interesse> findInteresseByDonoId(Long donoId) {
+        List<Interesse> interesses = interesseRepository.findByIdDonoId(donoId).orElseThrow(() -> httpResponseService.notFound("interesse not found"));
+        System.out.println("retornando interesses do usuario com id = " + donoId.toString());
+
+        return interesses;
+    }
+
+    /**
+     * Retorna uma lista de interesses do usuario
+     *
+     * @param interessadoId
+     * @return List<Interesse>
+     */
+    public List<Interesse> findInteresseByInteressadoId(Long interessadoId) {
+        List<Interesse> interesses = interesseRepository.findByIdInteressadoId(interessadoId).orElseThrow(() -> httpResponseService.notFound("interesse not found"));
+        System.out.println("retornando interessados no usuario com id = " + interessadoId.toString());
+
+        return interesses;
+    }
+
+    /**
+     * Checa se um usuario tem determinado jogo em sua biblioteca
+     *
+     * @param usuarioId
+     * @param produtoId
+     * @return boolean
+     */
+    private boolean usuarioTemJogo(Long usuarioId, Long produtoId){
+        try {
+            return bibliotecaRepository.findByIdUsuarioId(usuarioId)
+                    .stream()
+                    .noneMatch(biblioteca -> Objects.equals(biblioteca.getId().getProdutoId(),produtoId));
+        } catch (NullPointerException ex){
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * Retorna verdadeiro se o interesse pode ser criado e processado
+     * Retorna falso caso contrario
+     *
+     * @param interesse tipo Interesse
+     * @return boolean
+     */
+    private boolean interesseValido(Interesse interesse) {
+        return usuarioTemJogo(interesse.getId().getInteressadoId(), interesse.getId().getProdutoId())
+                && !usuarioTemJogo(interesse.getId().getDonoId(),interesse.getId().getProdutoId());
 
     }
 
@@ -38,9 +96,14 @@ public class InteresseService extends BaseService {
                             throw httpResponseService.badRequest("An interesse exists with the same donoId and interessadoId");
                         },
                         () -> {
-                            interesseRepository.save(interesse);
-                            System.out.println("interesse salvo");
-                            checarMatch(interesse.getId());
+                            if(interesseValido(interesse)) {
+                                interesseRepository.save(interesse);
+                                System.out.println("interesse salvo");
+                                checarMatch(interesse.getId());
+                            }
+                            else{
+                                throw httpResponseService.badRequest("O interessado ja tem o jogo ou o dono nao tem o jogo");
+                            }
                         });
 
     }
@@ -96,6 +159,7 @@ public class InteresseService extends BaseService {
             bibliotecaRepository.delete(bibliotecaB);
 
         } catch (Exception ex) {
+            httpResponseService.badRequest("Erro no processamento do match");
             System.out.println("Erro no processamento do match");
         }
     }

@@ -11,9 +11,9 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InteresseDTO {
-    public Long donoId;
+    private Long interessadoId;
 
-    public Long interessadoId;
+    private Long donoId;
 
-    public Long produtoId;
+    private Long produtoId;
 }

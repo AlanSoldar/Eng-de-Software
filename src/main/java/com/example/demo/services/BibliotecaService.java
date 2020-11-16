@@ -17,7 +17,7 @@ public class BibliotecaService extends BaseService {
 
     public List<Biblioteca> findBibliotecasByUsuarioId(Long id) {
 
-        List<Biblioteca> bibliotecas = bibliotecaRepository.findById_UsuarioId(id);
+        List<Biblioteca> bibliotecas = bibliotecaRepository.findByIdUsuarioId(id);
         System.out.println("retornando todos os bibliotecas do usuario com id = " + id);
 
         if (bibliotecas.isEmpty()) {

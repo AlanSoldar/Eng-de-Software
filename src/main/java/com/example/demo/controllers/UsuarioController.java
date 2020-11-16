@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.data_transfer_objects.InteresseDTO;
 import com.example.demo.data_transfer_objects.PagamentoDTO;
 import com.example.demo.entities.Interesse;
 import com.example.demo.entities.InteresseId;
@@ -15,7 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class UsuarioController extends BaseController {
 
     @Autowired
@@ -50,7 +51,7 @@ public class UsuarioController extends BaseController {
 
     }
 
-    @PostMapping(value = "/usuario")
+    @PostMapping(value = "/usuario/novo")
     public ResponseEntity postUsuario(@RequestBody Usuario usuario) {
 
         try {
@@ -128,18 +129,16 @@ public class UsuarioController extends BaseController {
         }
 
     }
-
-    @PostMapping(value = "usuario/{usuarioId}/interesses")
-    public ResponseEntity postInteresse(@PathVariable("interessadoId") Long interessadoId
-            , @PathVariable("donoId") Long donoId
-            , @PathVariable("produtoId)") Long produtoiD) {
+    @RequestMapping(value = "/usuario/novoInteresse", method = RequestMethod.POST)
+    @PostMapping(value = "/interesses")
+    public ResponseEntity postInteresse(@RequestBody InteresseDTO interesseDTO) {
         try {
             interesseService.processarInteresse(Interesse
                     .builder().id(InteresseId
                             .builder()
-                            .donoId(donoId)
-                            .interessadoId(interessadoId)
-                            .produtoId(produtoiD)
+                            .donoId(interesseDTO.getDonoId())
+                            .interessadoId(interesseDTO.getInteressadoId())
+                            .produtoId(interesseDTO.getProdutoId())
                             .build())
                     .build());
         } catch (HttpClientErrorException exception) {
@@ -149,4 +148,36 @@ public class UsuarioController extends BaseController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Retorna um JSON com os interesses do usuario
+     *
+     * @param usuarioId
+     * @return
+     */
+    @GetMapping(value = "usuario/{usuarioId}/interesses")
+    public ResponseEntity getInteresses (@PathVariable("usuarioId") Long usuarioId){
+        try{
+            List<Interesse> interesses = interesseService.findInteresseByInteressadoId(usuarioId);
+            return ResponseEntity.ok().body(interesses);
+        } catch (HttpClientErrorException exception){
+            return createResponseEntity(exception);
+        }
+    }
+
+    /**
+     * Retorna um JSON com os interesses de outros usuarios em seus produtos postados na comunidade
+     *
+     * @param usuarioId
+     * @return List<InteresseId>
+     */
+    @GetMapping(value = "usuario/{usuarioId}/interessados")
+    public ResponseEntity getInteressados (@PathVariable("usuarioId") Long usuarioId){
+        try{
+            List<Interesse> interesses = interesseService.findInteresseByDonoId(usuarioId);
+            return ResponseEntity.ok().body(interesses);
+        } catch (HttpClientErrorException exception){
+            return createResponseEntity(exception);
+        }
+
+    }
 }
