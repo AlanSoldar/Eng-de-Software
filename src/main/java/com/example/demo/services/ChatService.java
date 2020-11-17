@@ -71,12 +71,23 @@ public class ChatService extends BaseService {
     }
 
     public void publicarChatConteudo(ChatConteudo chatConteudo) {
+        System.out.println(chatConteudo);
         validateChatConteudo(chatConteudo);
+        try {
         chatConteudoRepository.save(chatConteudo);
+        } catch (Exception e) {
+            Long id = chatConteudo.getUsuario1Id();
+            chatConteudo.setUsuario1Id(chatConteudo.getUsuario2Id());
+            chatConteudo.setUsuario2Id(id);
+            chatConteudoRepository.save(chatConteudo);
+        }
         System.out.println("conteudo publicado");
     }
 
     public void validateChatConteudo(ChatConteudo chatConteudo) {
+        if (Objects.isNull(chatConteudo.getMensagem())) {
+            chatConteudo.setMensagem(" ");
+        }
         if (Objects.isNull(chatConteudo.getUsuario1Id()) || Objects.isNull(chatConteudo.getUsuario2Id())) {
             httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
         }

@@ -119,6 +119,7 @@ public class UsuarioController extends BaseController {
 
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/usuario/{usuarioId}/saldo")
     public ResponseEntity postBibliotecaDoUsuario(@PathVariable("usuarioId") Long usuarioId, @RequestBody PagamentoDTO pagamentoDTO) {
 
