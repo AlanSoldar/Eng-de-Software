@@ -104,8 +104,17 @@ public class ChatService extends BaseService {
     }
 
     public void validateMatch (MatchDTO matchDTO){
-        if(matchDTO.getMatchAceito())
-            bibliotecaService.processarMatch(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id(), matchDTO.getProduto1Id(), matchDTO.getProduto2Id());
+        if(matchDTO.getMatchAceito()){
+
+            bibliotecaService.processarMatch(
+                    matchDTO.getUsuario1Id(),
+                    matchDTO.getUsuario2Id(),
+                    interesseService.findInteresseByDonoIdAndInteressadoid(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id()).getId().getProdutoId(),
+                    interesseService.findInteresseByDonoIdAndInteressadoid(matchDTO.getUsuario2Id(), matchDTO.getUsuario1Id()).getId().getProdutoId()
+            );
+        }
+
         interesseService.deleteInteresse(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id());
+
     }
 }

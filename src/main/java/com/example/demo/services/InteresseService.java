@@ -42,6 +42,20 @@ public class InteresseService extends BaseService {
     }
 
     /**
+     * Retorna um interesse especifico entre dois usuarios
+     *
+     * @param donoId
+     * @param interessadoId
+     * @return
+     */
+    public Interesse findInteresseByDonoIdAndInteressadoid(Long donoId, Long interessadoId) {
+        Interesse interesse = interesseRepository.findByIdDonoIdAndIdInteressadoId(donoId, interessadoId).orElseThrow(() -> httpResponseService.notFound("interesse not found"));
+        System.out.println("retornando interesse do usuario com id = " + donoId.toString());
+
+        return interesse;
+    }
+
+    /**
      * Retorna uma lista de interesses do usuario
      *
      * @param interessadoId
