@@ -15,9 +15,5 @@ public class MatchDTO {
 
     private Long usuario2Id;
 
-    private Long produto1Id;
-
-    private Long produto2Id;
-
     private Boolean matchAceito;
 }
