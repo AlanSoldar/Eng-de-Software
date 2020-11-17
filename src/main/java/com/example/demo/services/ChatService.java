@@ -42,9 +42,11 @@ public class ChatService extends BaseService {
         return chatList;
     }
 
-    public Chat findChatByUsersIds(Long usuario_1_id, Long usuario_2_id) {
-        return chatRepository.findById_Usuario1IdAndId_Usuario2Id(usuario_1_id, usuario_2_id)
+    public Chat closeChatByUsersId(Long usuario_1_id, Long usuario_2_id) {
+        Chat chat = chatRepository.findById_Usuario1IdAndId_Usuario2Id(usuario_1_id, usuario_2_id)
                 .orElseThrow(() -> httpResponseService.notFound("chat not found"));
+        chat.setResolvidoFlag(true);
+        return chatRepository.save(chat);
     }
 
     public List<ChatConteudo> listAllContent() {

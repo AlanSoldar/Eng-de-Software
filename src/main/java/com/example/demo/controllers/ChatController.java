@@ -46,7 +46,7 @@ public class ChatController extends BaseController {
         Chat chat;
         System.out.println("cheguei");
         try {
-            chat = chatService.findChatByUsersIds(user_1_id,user_2_id);
+            chat = chatService.closeChatByUsersId(user_1_id,user_2_id);
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
         }
@@ -104,9 +104,8 @@ public class ChatController extends BaseController {
         try {
             System.out.println(matchDTO);
             chatService.validateMatch(matchDTO);
-            chatService
-                    .findChatByUsersIds(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id())
-                    .setResolvidoFlag(true);
+            chatService.closeChatByUsersId(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id());
+
         } catch (HttpClientErrorException exception){
             return createResponseEntity(exception);
         }
