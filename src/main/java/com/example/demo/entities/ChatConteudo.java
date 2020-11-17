@@ -3,9 +3,7 @@ package com.example.demo.entities;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "CHAT_CONTEUDO")
 @Data
@@ -15,6 +13,8 @@ import javax.persistence.Id;
 public class ChatConteudo {
 
     @Id
+    @SequenceGenerator(name="chatseq", initialValue=30, allocationSize=100)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chatseq")
     @Column(name = "ID")
     private Long id;
 
@@ -35,7 +35,6 @@ public class ChatConteudo {
     private String mensagem;
 
     @Column(name = "DATE_TIME")
-    @NotNull
     private Long dateTime;
 
 }
