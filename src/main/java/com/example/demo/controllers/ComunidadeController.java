@@ -53,9 +53,11 @@ public class ComunidadeController extends BaseController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/comunidade/novoInteresse")
     public ResponseEntity postInteresse(@RequestBody InteresseDTO interesseDTO) {
         try {
+            System.out.println(interesseDTO);
             interesseService.processarInteresse(Interesse
                     .builder().id(InteresseId
                             .builder()

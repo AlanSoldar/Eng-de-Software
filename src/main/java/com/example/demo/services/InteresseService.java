@@ -135,7 +135,7 @@ public class InteresseService extends BaseService {
     }
 
     public void deleteInteresse(Long usuario1Id, Long usuario2Id){
-        interesseRepository.delete(interesseRepository.findByIdDonoIdAndIdInteressadoId(usuario1Id,usuario2Id).orElse(null));
-        interesseRepository.delete(interesseRepository.findByIdDonoIdAndIdInteressadoId(usuario2Id,usuario1Id).orElse(null));
+        interesseRepository.delete(interesseRepository.findByIdDonoIdAndIdInteressadoId(usuario1Id,usuario2Id).orElse(Interesse.builder().build()));
+        interesseRepository.delete(interesseRepository.findByIdDonoIdAndIdInteressadoId(usuario2Id,usuario1Id).orElse(Interesse.builder().build()));
     }
 }

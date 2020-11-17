@@ -102,6 +102,7 @@ public class ChatController extends BaseController {
     @PostMapping(value = "/usuario/biblioteca/match")
     public ResponseEntity postResultadoMatch (@RequestBody MatchDTO matchDTO){
         try {
+            System.out.println(matchDTO);
             chatService.validateMatch(matchDTO);
             chatService
                     .findChatByUsersIds(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id())

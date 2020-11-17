@@ -30,7 +30,6 @@ public class UsuarioService extends BaseService {
     public Usuario findUsuarioById(Long id) {
 
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> httpResponseService.notFound("usuario not found"));
-        System.out.println("retornando usuario com id = " + id.toString());
 
         return usuario;
 
