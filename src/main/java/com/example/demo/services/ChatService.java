@@ -100,7 +100,7 @@ public class ChatService extends BaseService {
         if (Objects.isNull(chatConteudo.getUsuario1Id()) || Objects.isNull(chatConteudo.getUsuario2Id())) {
             throw httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
         }
-        else if (chatConteudo.getUsuario1Id() < chatConteudo.getUsuario2Id()) {
+        else if (chatConteudo.getUsuario1Id() >= chatConteudo.getUsuario2Id()) {
             throw httpResponseService.badRequest("usuario1Id deve ser menor que usuario2Id");
         }
     }
