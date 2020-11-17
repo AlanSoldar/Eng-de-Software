@@ -129,24 +129,6 @@ public class UsuarioController extends BaseController {
         }
 
     }
-    @RequestMapping(value = "/usuario/novoInteresse", method = RequestMethod.POST)
-    @PostMapping(value = "/interesses")
-    public ResponseEntity postInteresse(@RequestBody InteresseDTO interesseDTO) {
-        try {
-            interesseService.processarInteresse(Interesse
-                    .builder().id(InteresseId
-                            .builder()
-                            .donoId(interesseDTO.getDonoId())
-                            .interessadoId(interesseDTO.getInteressadoId())
-                            .produtoId(interesseDTO.getProdutoId())
-                            .build())
-                    .build());
-        } catch (HttpClientErrorException exception) {
-            return createResponseEntity(exception);
-        }
-
-        return ResponseEntity.ok().build();
-    }
 
     /**
      * Retorna um JSON com os interesses do usuario

@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.data_transfer_objects.ChatDTO;
+import com.example.demo.data_transfer_objects.MatchDTO;
 import com.example.demo.entities.Chat;
 import com.example.demo.entities.ChatConteudo;
 import com.example.demo.services.ChatService;
@@ -92,6 +93,20 @@ public class ChatController extends BaseController {
         try {
             chatService.publicarChatConteudo(ChatConteudo);
         } catch (HttpClientErrorException exception) {
+            return createResponseEntity(exception);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/usuario/biblioteca/match")
+    public ResponseEntity postResultadoMatch (@RequestBody MatchDTO matchDTO){
+        try {
+            chatService.validateMatch(matchDTO);
+            chatService
+                    .findChatByUsersIds(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id())
+                    .setResolvidoFlag(true);
+        } catch (HttpClientErrorException exception){
             return createResponseEntity(exception);
         }
 

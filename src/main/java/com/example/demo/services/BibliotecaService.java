@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BibliotecaService extends BaseService {
@@ -76,5 +77,61 @@ public class BibliotecaService extends BaseService {
         bibliotecaRepository.deleteById(id);
         System.out.println("deletando biblioteca com id = " + id.toString());
 
+    }
+
+    /**
+     * Checa se um usuario tem determinado jogo em sua biblioteca
+     *
+     * @param usuarioId
+     * @param produtoId
+     * @return boolean
+     */
+    public boolean usuarioTemJogo(Long usuarioId, Long produtoId){
+        try {
+            return bibliotecaRepository.findByIdUsuarioId(usuarioId)
+                    .stream()
+                    .noneMatch(biblioteca -> Objects.equals(biblioteca.getId().getProdutoId(),produtoId));
+        } catch (NullPointerException ex){
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * Processa o match com os devidos usuarios, trocando os jogos entre eles
+     *
+     * @param usuarioA    usuarioA
+     * @param usuarioB    usuarioB
+     * @param produtoId_A produto do usuarioA
+     * @param produtoId_B produto do usuarioB
+     */
+    public void processarMatch(Long usuarioA, Long usuarioB, Long produtoId_A, Long produtoId_B) {
+        Biblioteca bibliotecaA = bibliotecaRepository.findByIdUsuarioIdAndIdProdutoId(usuarioA, produtoId_A).orElseThrow(() -> httpResponseService.notFound("No user was found"));
+        Biblioteca bibliotecaB = bibliotecaRepository.findByIdUsuarioIdAndIdProdutoId(usuarioB, produtoId_B).orElseThrow(() -> httpResponseService.notFound("No user was found"));
+        try {
+            bibliotecaRepository.save(Biblioteca
+                    .builder()
+                    .id(BibliotecaId
+                            .builder()
+                            .usuarioId(usuarioA)
+                            .produtoId(produtoId_B)
+                            .build())
+                    .build());
+            bibliotecaRepository.save(Biblioteca
+                    .builder()
+                    .id(BibliotecaId
+                            .builder()
+                            .usuarioId(usuarioB)
+                            .produtoId(produtoId_A)
+                            .build())
+                    .build());
+
+            bibliotecaRepository.delete(bibliotecaA);
+            bibliotecaRepository.delete(bibliotecaB);
+
+        } catch (Exception ex) {
+            httpResponseService.badRequest("Erro no processamento do match");
+            System.out.println("Erro no processamento do match");
+        }
     }
 }

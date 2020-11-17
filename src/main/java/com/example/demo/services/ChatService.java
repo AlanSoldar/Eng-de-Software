@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.data_transfer_objects.ChatDTO;
+import com.example.demo.data_transfer_objects.MatchDTO;
 import com.example.demo.entities.*;
 import com.example.demo.repositories.ChatRepository;
 import com.example.demo.repositories.ChatConteudoRepository;
@@ -21,6 +22,12 @@ public class ChatService extends BaseService {
 
     @Autowired
     private ChatConteudoRepository chatConteudoRepository;
+
+    @Autowired
+    private BibliotecaService bibliotecaService;
+
+    @Autowired
+    private InteresseService interesseService;
 
     public List<Chat> listChats() {
         List<Chat> chatList = new ArrayList<>();
@@ -66,7 +73,7 @@ public class ChatService extends BaseService {
 
     public void validateChatDTO(ChatDTO chatDTO) {
         if (Objects.isNull(chatDTO.getUsuario1Id()) || Objects.isNull(chatDTO.getUsuario2Id())) {
-            httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
+            throw httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
         }
     }
 
@@ -78,11 +85,16 @@ public class ChatService extends BaseService {
 
     public void validateChatConteudo(ChatConteudo chatConteudo) {
         if (Objects.isNull(chatConteudo.getUsuario1Id()) || Objects.isNull(chatConteudo.getUsuario2Id())) {
-            httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
+            throw httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
         }
         else if (chatConteudo.getUsuario1Id() < chatConteudo.getUsuario2Id()) {
-            httpResponseService.badRequest("usuario1Id deve ser menor que usuario2Id");
+            throw httpResponseService.badRequest("usuario1Id deve ser menor que usuario2Id");
         }
     }
 
+    public void validateMatch (MatchDTO matchDTO){
+        if(matchDTO.getMatchAceito())
+            bibliotecaService.processarMatch(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id(), matchDTO.getProduto1Id(), matchDTO.getProduto2Id());
+        interesseService.deleteInteresse(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id());
+    }
 }

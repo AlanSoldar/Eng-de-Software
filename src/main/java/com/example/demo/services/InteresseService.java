@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.data_transfer_objects.ChatDTO;
 import com.example.demo.entities.Biblioteca;
 import com.example.demo.entities.BibliotecaId;
 import com.example.demo.entities.Interesse;
@@ -19,7 +20,9 @@ public class InteresseService extends BaseService {
     @Autowired
     private InteresseRepository interesseRepository;
     @Autowired
-    private BibliotecaRepository bibliotecaRepository;
+    private BibliotecaService bibliotecaService;
+    @Autowired
+    private ChatService chatService;
 
     public Page<Interesse> listInteresses(Pageable page) {
         return interesseRepository.findAll(page);
@@ -51,23 +54,7 @@ public class InteresseService extends BaseService {
         return interesses;
     }
 
-    /**
-     * Checa se um usuario tem determinado jogo em sua biblioteca
-     *
-     * @param usuarioId
-     * @param produtoId
-     * @return boolean
-     */
-    private boolean usuarioTemJogo(Long usuarioId, Long produtoId){
-        try {
-            return bibliotecaRepository.findByIdUsuarioId(usuarioId)
-                    .stream()
-                    .noneMatch(biblioteca -> Objects.equals(biblioteca.getId().getProdutoId(),produtoId));
-        } catch (NullPointerException ex){
-            System.out.println(ex.getMessage());
-        }
-        return false;
-    }
+
 
     /**
      * Retorna verdadeiro se o interesse pode ser criado e processado
@@ -76,9 +63,9 @@ public class InteresseService extends BaseService {
      * @param interesse tipo Interesse
      * @return boolean
      */
-    private boolean interesseValido(Interesse interesse) {
-        return usuarioTemJogo(interesse.getId().getInteressadoId(), interesse.getId().getProdutoId())
-                && !usuarioTemJogo(interesse.getId().getDonoId(),interesse.getId().getProdutoId());
+    public boolean interesseValido(Interesse interesse) {
+        return bibliotecaService.usuarioTemJogo(interesse.getId().getInteressadoId(), interesse.getId().getProdutoId())
+                && !bibliotecaService.usuarioTemJogo(interesse.getId().getDonoId(),interesse.getId().getProdutoId());
 
     }
 
@@ -117,50 +104,24 @@ public class InteresseService extends BaseService {
         interesseRepository.findByIdDonoIdAndIdInteressadoIdAndIdProdutoId(interesseId.getInteressadoId(), interesseId.getDonoId(), interesseId.getProdutoId())
                 .ifPresent(interesseMatch -> {
                     if (interesseId.getDonoId().equals(interesseMatch.getId().getInteressadoId()) && interesseId.getInteressadoId().equals(interesseMatch.getId().getDonoId()))
-                        processarMatch(
-                                interesseId.getDonoId(),
-                                interesseId.getInteressadoId(),
-                                interesseId.getProdutoId(),
-                                interesseMatch.getId().getProdutoId()
-                        );
+                        chatService.publicarChat(
+                                ChatDTO.builder()
+                                        .usuario1Id(interesseId.getDonoId())
+                                        .usuario2Id(interesseId.getInteressadoId())
+                                        .resolvidoFlag(false)
+                                        .build());
+//
+//                        processarMatch(
+//                                interesseId.getDonoId(),
+//                                interesseId.getInteressadoId(),
+//                                interesseId.getProdutoId(),
+//                                interesseMatch.getId().getProdutoId()
+//                        );
                 });
     }
 
-    /**
-     * Processa o match com os devidos usuarios, trocando os jogos entre eles
-     *
-     * @param usuarioA    usuarioA
-     * @param usuarioB    usuarioB
-     * @param produtoId_A produto do usuarioA
-     * @param produtoId_B produto do usuarioB
-     */
-    public void processarMatch(Long usuarioA, Long usuarioB, Long produtoId_A, Long produtoId_B) {
-        Biblioteca bibliotecaA = bibliotecaRepository.findByIdUsuarioIdAndIdProdutoId(usuarioA, produtoId_A).orElseThrow(() -> httpResponseService.notFound("No user was found"));
-        Biblioteca bibliotecaB = bibliotecaRepository.findByIdUsuarioIdAndIdProdutoId(usuarioB, produtoId_B).orElseThrow(() -> httpResponseService.notFound("No user was found"));
-        try {
-            bibliotecaRepository.save(Biblioteca
-                    .builder()
-                    .id(BibliotecaId
-                            .builder()
-                            .usuarioId(usuarioA)
-                            .produtoId(produtoId_B)
-                            .build())
-                    .build());
-            bibliotecaRepository.save(Biblioteca
-                    .builder()
-                    .id(BibliotecaId
-                            .builder()
-                            .usuarioId(usuarioB)
-                            .produtoId(produtoId_A)
-                            .build())
-                    .build());
-
-            bibliotecaRepository.delete(bibliotecaA);
-            bibliotecaRepository.delete(bibliotecaB);
-
-        } catch (Exception ex) {
-            httpResponseService.badRequest("Erro no processamento do match");
-            System.out.println("Erro no processamento do match");
-        }
+    public void deleteInteresse(Long usuario1Id, Long usuario2Id){
+        interesseRepository.delete(interesseRepository.findByIdDonoIdAndIdInteressadoId(usuario1Id,usuario2Id).orElse(null));
+        interesseRepository.delete(interesseRepository.findByIdDonoIdAndIdInteressadoId(usuario2Id,usuario1Id).orElse(null));
     }
 }
