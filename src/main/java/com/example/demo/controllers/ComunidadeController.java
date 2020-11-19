@@ -42,10 +42,10 @@ public class ComunidadeController extends BaseController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/comunidade")
-    public ResponseEntity deleteProduto(@RequestBody ComunidadeDTO comunidadeDTO) {
+    @DeleteMapping(value = "/comunidade/usuario/{usuarioId}/produto/{produtoId}")
+    public ResponseEntity deleteProduto(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId) {
         try {
-            comunidadeService.removerProdutoDaComunidade(comunidadeDTO);
+            comunidadeService.removerProdutoDaComunidade(usuarioId, produtoId);
         } catch (HttpClientErrorException exception) {
             return createResponseEntity(exception);
         }

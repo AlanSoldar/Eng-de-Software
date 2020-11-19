@@ -119,6 +119,19 @@ public class UsuarioController extends BaseController {
 
     }
 
+    @DeleteMapping(value = "/usuario/{usuarioId}/produto/{produtoId}")
+    public ResponseEntity deleteBibliotecaDoUsuario(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId) {
+
+        try {
+            usuarioService.removeProdutoNaBibliotecaDoUsuario(usuarioId, produtoId);
+        } catch (HttpClientErrorException exception) {
+            return createResponseEntity(exception);
+        }
+
+        return ResponseEntity.ok().build();
+
+    }
+
     @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/usuario/{usuarioId}/saldo")
     public ResponseEntity postBibliotecaDoUsuario(@PathVariable("usuarioId") Long usuarioId, @RequestBody PagamentoDTO pagamentoDTO) {

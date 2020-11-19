@@ -100,7 +100,7 @@ public class UsuarioService extends BaseService {
     }
 
     public void removeProdutoNaBibliotecaDoUsuario(Long usuarioId, Long produtoId) {
-
+        bibliotecaService.deleteBibliotecaById(BibliotecaId.builder().usuarioId(usuarioId).produtoId(produtoId).build());
     }
 
     public Usuario processTransacao(Long usuarioId, PagamentoDTO pagamentoDTO) {

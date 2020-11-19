@@ -52,9 +52,8 @@ public class ComunidadeService extends BaseService {
         }
     }
 
-    public void removerProdutoDaComunidade(ComunidadeDTO comunidadeDTO) {
-        validateComunidadeDTO(comunidadeDTO);
-        comunidadeRepository.delete(comunidadeRepository.findById_UsuarioIdAndId_ProdutoId(comunidadeDTO.getUsuarioId(), comunidadeDTO.getProdutoId())
+    public void removerProdutoDaComunidade(Long usuarioId, Long produtoId) {
+        comunidadeRepository.delete(comunidadeRepository.findById_UsuarioIdAndId_ProdutoId(usuarioId, produtoId)
                 .orElseThrow(() -> httpResponseService.notFound("produto nao encontrado na comunidade")));
             System.out.println("produto removido da loja da comunidade");
     }
