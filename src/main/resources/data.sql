@@ -63,8 +63,10 @@ INSERT INTO BIBLIOTECA (USUARIO_ID, PRODUTO_ID) VALUES
 (1,9),
 (1,11),
 (2,3),
+(2,7),
+(2,12),
+(2,10),
 (3,4),
-(3,7),
 (3,10),
 (3,9),
 (3,3),
@@ -72,7 +74,6 @@ INSERT INTO BIBLIOTECA (USUARIO_ID, PRODUTO_ID) VALUES
 (4,2),
 (4,5),
 (4,6),
-(2,7),
 (5,2),
 (5,8);
 

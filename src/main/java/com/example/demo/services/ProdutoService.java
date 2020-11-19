@@ -48,7 +48,6 @@ public class ProdutoService extends BaseService {
     public Produto findProdutoById(Long id) {
 
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> httpResponseService.notFound("produto not found"));
-        System.out.println("retornando produto com id = " + id.toString());
 
         return produto;
 

@@ -115,7 +115,7 @@ public class InteresseService extends BaseService {
      * @param interesseId
      */
     public void checarMatch(InteresseId interesseId) {
-        interesseRepository.findByIdDonoIdAndIdInteressadoIdAndIdProdutoId(interesseId.getInteressadoId(), interesseId.getDonoId(), interesseId.getProdutoId())
+        interesseRepository.findByIdDonoIdAndIdInteressadoId(interesseId.getInteressadoId(),interesseId.getDonoId())
                 .ifPresent(interesseMatch -> {
                     if (interesseId.getDonoId().equals(interesseMatch.getId().getInteressadoId()) && interesseId.getInteressadoId().equals(interesseMatch.getId().getDonoId()))
                         chatService.publicarChat(

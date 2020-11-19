@@ -74,6 +74,11 @@ public class ChatService extends BaseService {
     }
 
     public void validateChatDTO(ChatDTO chatDTO) {
+        if (chatDTO.getUsuario1Id() < chatDTO.getUsuario2Id()) {
+            Long id = chatDTO.getUsuario1Id();
+            chatDTO.setUsuario1Id(chatDTO.getUsuario2Id());
+            chatDTO.setUsuario2Id(id);
+        }
         if (Objects.isNull(chatDTO.getUsuario1Id()) || Objects.isNull(chatDTO.getUsuario2Id())) {
             throw httpResponseService.badRequest("usuario1Id e usuario2Id nao podem ser nulos");
         }
@@ -109,7 +114,7 @@ public class ChatService extends BaseService {
 
     public void validateMatch (MatchDTO matchDTO){
         if(matchDTO.getMatchAceito()){
-
+            System.out.println("match detectado");
             bibliotecaService.processarMatch(
                     matchDTO.getUsuario1Id(),
                     matchDTO.getUsuario2Id(),
@@ -121,4 +126,5 @@ public class ChatService extends BaseService {
         interesseService.deleteInteresse(matchDTO.getUsuario1Id(), matchDTO.getUsuario2Id());
 
     }
+
 }
